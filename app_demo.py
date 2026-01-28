@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
-from PIL import Image
 
 # Set page config
 st.set_page_config(
@@ -109,26 +107,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Load model, scaler, and columns
-@st.cache_resource
-def load_resources(model_type="Logistic"):
-    try:
-        filename = 'model_logistic.pkl' if model_type == "Logistic" else 'model_linear.pkl'
-        with open(filename, 'rb') as f:
-            model = pickle.load(f)
-        with open('scaler.pkl', 'rb') as f:
-            scaler = pickle.load(f)
-        with open('columns.pkl', 'rb') as f:
-            columns = pickle.load(f)
-        return model, scaler, columns
-    except FileNotFoundError:
-        st.error("❌ Model files not found. This app requires trained model files to run.")
-        st.info("💡 Tip: Run `python analysis_and_train.py` locally to generate model files.")
-        return None, None, None
-
 # Sidebar for navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "Data Analysis", "Prediction"])
+page = st.sidebar.radio("Go to", ["Home", "Data Analysis", "Prediction Demo"])
 
 if page == "Home":
     st.title("Customer Churn Analysis")
@@ -148,11 +129,8 @@ if page == "Home":
         """)
         
     with col2:
-        try:
-            st.image("churn_distribution.png", caption="Churn Distribution", width=400)
-        except:
-            st.info("📊 Churn distribution chart not available in this deployment")
-
+        st.info("📊 Churn distribution visualization would appear here in full version")
+    
     st.divider()
     
     # Simple Stats Row
@@ -173,36 +151,26 @@ elif page == "Data Analysis":
         with col_a:
             st.info("The dataset is slightly imbalanced, which is typical for churn analysis. Most customers stay (Exited=0).")
         with col_b:
-            try:
-                st.image("churn_distribution.png", use_container_width=True)
-            except:
-                st.info("📊 Chart not available in deployment")
+            st.info("📊 Chart visualization would appear here in full version")
         
     with tab2:
-        try:
-            st.image("correlation_heatmap.png", use_container_width=True)
-        except:
-            st.info("🔗 Correlation heatmap not available in deployment")
+        st.info("🔗 Correlation heatmap would appear here in full version")
         st.markdown("""
         **Analysis:**
         - **Age** and **Balance** show noticeable correlations with churn.
         - **IsActiveMember** is a strong negative predictor (active members stay longer).
         """)
 
-elif page == "Prediction":
-    st.title("🔮 Predictive Analytics")
+elif page == "Prediction Demo":
+    st.title("🔮 Predictive Analytics Demo")
     
     # Model Selection
     selected_model_type = st.sidebar.selectbox("Select Model Algorithm", ["Logistic", "Linear"])
-    model, scaler, columns = load_resources(selected_model_type)
     
-    # Check if models loaded successfully
-    if model is None or scaler is None or columns is None:
-        st.warning("⚠️ Models not available in this deployment")
-        st.info("This deployment focuses on the UI demonstration. For full functionality, run locally with trained models.")
-        st.stop()
+    st.info("⚠️ This is a demonstration version. Model files are not included in this deployment.")
+    st.info("💡 For full functionality with predictions, please run this app locally with trained models.")
     
-    st.write(f"Using **{selected_model_type} Regression** to calculate churn probability.")
+    st.write(f"This demo shows the interface for **{selected_model_type} Regression** based predictions.")
     
     with st.container():
         # Input fields
@@ -226,47 +194,10 @@ elif page == "Prediction":
     st.divider()
     
     if st.button("🚀 Run Prediction Engine"):
-        # Prepare input data
-        input_data = {
-            'CreditScore': credit_score,
-            'Age': age,
-            'Tenure': 5, # Standard default or add to inputs
-            'Balance': balance,
-            'NumOfProducts': num_products,
-            'HasCrCard': 1 if has_cr_card else 0,
-            'IsActiveMember': is_active,
-            'EstimatedSalary': salary,
-            'Geography_Germany': 1 if geography == "Germany" else 0,
-            'Geography_Spain': 1 if geography == "Spain" else 0,
-            'Gender_Male': 1 if gender == "Male" else 0
-        }
-        
-        # Create DataFrame
-        input_df = pd.DataFrame([input_data])
-        input_df = input_df[columns]
-        input_scaled = scaler.transform(input_df)
-        
-        # Prediction
-        if selected_model_type == "Logistic":
-            prediction = model.predict(input_scaled)
-            probability = model.predict_proba(input_scaled)[0][1]
-        else:
-            # Linear Regression for classification (LPM)
-            raw_pred = model.predict(input_scaled)[0]
-            probability = np.clip(raw_pred, 0, 1)
-            prediction = [1 if probability >= 0.5 else 0]
-        
-        st.subheader("Assessment Result")
-        
-        if prediction[0] == 1:
-            st.error(f"⚠️ **HIGH RISK:** The model predicts this customer is likely to **CHURN**.")
-            st.progress(probability)
-            st.write(f"Confidence Level: **{probability:.2%}**")
-        else:
-            st.success(f"✅ **LOW RISK:** The model predicts this customer is likely to **STAY**.")
-            st.progress(probability)
-            st.write(f"Churn Probability: **{probability:.2%}**")
-            
-        with st.expander("Technical Details"):
-            st.write("The model used is a Logistic Regression classifier trained on 10,000 customer records.")
-            st.json(input_data)
+        st.subheader("Demo Result")
+        st.warning("⚠️ Prediction disabled in demo mode")
+        st.info("In the full version, this would show churn probability based on your inputs.")
+        st.info("To use the full prediction feature, run this app locally with the trained models.")
+
+st.sidebar.divider()
+st.sidebar.info("📋 This is a lightweight demo version optimized for cloud deployment.")

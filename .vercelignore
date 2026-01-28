@@ -3,6 +3,7 @@
 *.csv
 .git/
 .gitignore
+.gitkeep
 README.md
 analysis_and_train.py
 churn.csv
@@ -30,4 +31,8 @@ nosetests.xml
 coverage.xml
 *.cover
 *.log
-.gitkeep
+*.pkl
+*.pickle
+node_modules/
+package-lock.json
+yarn.lock
