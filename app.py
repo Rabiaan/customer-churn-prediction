@@ -143,7 +143,10 @@ if page == "Home":
         """)
         
     with col2:
-        st.image("churn_distribution.png", caption="Churn Distribution", width=400)
+        try:
+            st.image("churn_distribution.png", caption="Churn Distribution", width=400)
+        except:
+            st.info("📊 Churn distribution chart not available in this deployment")
 
     st.divider()
     
@@ -165,10 +168,16 @@ elif page == "Data Analysis":
         with col_a:
             st.info("The dataset is slightly imbalanced, which is typical for churn analysis. Most customers stay (Exited=0).")
         with col_b:
-            st.image("churn_distribution.png", use_container_width=True)
+            try:
+                st.image("churn_distribution.png", use_container_width=True)
+            except:
+                st.info("📊 Chart not available in deployment")
         
     with tab2:
-        st.image("correlation_heatmap.png", use_container_width=True)
+        try:
+            st.image("correlation_heatmap.png", use_container_width=True)
+        except:
+            st.info("🔗 Correlation heatmap not available in deployment")
         st.markdown("""
         **Analysis:**
         - **Age** and **Balance** show noticeable correlations with churn.
