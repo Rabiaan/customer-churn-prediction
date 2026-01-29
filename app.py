@@ -67,6 +67,11 @@ st.markdown("""
         background-color: transparent !important;
     }
     
+    /* Remove background color from specific cache element */
+    .st-emotion-cache-11ofl8m.e1x5aka44 {
+        background-color: transparent !important;
+    }
+    
     /* Soft, Minimalist Cards */
     div[data-testid="stVerticalBlock"] > div[style*="flex-direction: column;"] > div {
         background: #ffffff;
