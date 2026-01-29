@@ -32,7 +32,7 @@ st.markdown("""
     
     /* Sidebar text visibility */
     section[data-testid="stSidebar"] * {
-        color: #ffffff !important;
+        color: #1a1a1a !important;
     }
     
     /* Sidebar title specifically */
@@ -52,13 +52,19 @@ st.markdown("""
         color: #1a1a1a !important;
     }
     
-    /* Logistic Regression text in white */
+    /* Logistic Regression text styling */
     .logistic-text {
-        color: white !important;
-        background-color: #2563eb;
+        color: #1a1a1a !important;
+        background-color: transparent !important;
         padding: 4px 8px;
         border-radius: 4px;
         font-weight: 500;
+    }
+    
+    /* Target the specific element classes */
+    .st-au.st-ax.st-av.st-aw.st-cp.st-cq.st-b8.st-b3.st-b4.st-cr.st-cs.st-ct.st-cu.st-cv.st-cw.st-cx.st-cy.st-cz.st-d0.st-b1.st-c2.st-ce.st-d1.st-d2.st-d3.st-d4.st-cn.st-d5 {
+        color: #1a1a1a !important;
+        background-color: transparent !important;
     }
     
     /* Soft, Minimalist Cards */
