@@ -122,8 +122,6 @@ def load_resources(model_type="Logistic"):
             columns = pickle.load(f)
         return model, scaler, columns
     except FileNotFoundError:
-        st.error("❌ Model files not found. This app requires trained model files to run.")
-        st.info("💡 Tip: Run `python analysis_and_train.py` locally to generate model files.")
         return None, None, None
 
 # Sidebar for navigation
@@ -148,10 +146,8 @@ if page == "Home":
         """)
         
     with col2:
-        try:
-            st.image("churn_distribution.png", caption="Churn Distribution", width=400)
-        except:
-            st.info("📊 Churn distribution chart not available in this deployment")
+        st.info("📊 Churn distribution visualization")
+        st.write("*Chart would appear here with local deployment*")
 
     st.divider()
     
@@ -173,16 +169,12 @@ elif page == "Data Analysis":
         with col_a:
             st.info("The dataset is slightly imbalanced, which is typical for churn analysis. Most customers stay (Exited=0).")
         with col_b:
-            try:
-                st.image("churn_distribution.png", use_container_width=True)
-            except:
-                st.info("📊 Chart not available in deployment")
+            st.info("📊 Churn distribution chart")
+            st.write("*Visualization available in local deployment*")
         
     with tab2:
-        try:
-            st.image("correlation_heatmap.png", use_container_width=True)
-        except:
-            st.info("🔗 Correlation heatmap not available in deployment")
+        st.info("🔗 Feature correlation heatmap")
+        st.write("*Correlation visualization available in local deployment*")
         st.markdown("""
         **Analysis:**
         - **Age** and **Balance** show noticeable correlations with churn.
@@ -199,7 +191,7 @@ elif page == "Prediction":
     # Check if models loaded successfully
     if model is None or scaler is None or columns is None:
         st.warning("⚠️ Models not available in this deployment")
-        st.info("This deployment focuses on the UI demonstration. For full functionality, run locally with trained models.")
+        st.info("This deployment demonstrates the UI. For full predictions, run locally or ensure model files are available.")
         st.stop()
     
     st.write(f"Using **{selected_model_type} Regression** to calculate churn probability.")
