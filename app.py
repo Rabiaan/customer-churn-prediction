@@ -32,7 +32,7 @@ st.markdown("""
     
     /* Sidebar text visibility */
     section[data-testid="stSidebar"] * {
-        color: #1a1a1a !important;
+        color: #ffffff !important;
     }
     
     /* Sidebar title specifically */
