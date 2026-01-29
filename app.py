@@ -52,6 +52,15 @@ st.markdown("""
         color: #1a1a1a !important;
     }
     
+    /* Logistic Regression text in white */
+    .logistic-text {
+        color: white !important;
+        background-color: #2563eb;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+    
     /* Soft, Minimalist Cards */
     div[data-testid="stVerticalBlock"] > div[style*="flex-direction: column;"] > div {
         background: #ffffff;
@@ -129,7 +138,7 @@ st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Data Analysis", "Prediction"])
 
 if page == "Home":
-    st.title("Customer Churn Analysis")
+    st.title("📊 Customer Churn Analysis")
     
     col1, col2 = st.columns([1.5, 1])
     
@@ -190,7 +199,7 @@ elif page == "Prediction":
     
     # Check if models loaded successfully
     if model is None or scaler is None or columns is None:
-        st.warning("⚠️ Models not available in this deployment")
+        st.warning(" Models not available in this deployment")
         st.info("This deployment demonstrates the UI. For full predictions, run locally or ensure model files are available.")
         st.stop()
     
@@ -217,7 +226,7 @@ elif page == "Prediction":
 
     st.divider()
     
-    if st.button("🚀 Run Prediction Engine"):
+    if st.button("▶️ Run Prediction Engine"): 
         # Prepare input data
         input_data = {
             'CreditScore': credit_score,
@@ -248,14 +257,14 @@ elif page == "Prediction":
             probability = np.clip(raw_pred, 0, 1)
             prediction = [1 if probability >= 0.5 else 0]
         
-        st.subheader("Assessment Result")
+        st.subheader("📋 Assessment Result")
         
         if prediction[0] == 1:
-            st.error(f"⚠️ **HIGH RISK:** The model predicts this customer is likely to **CHURN**.")
+            st.error(f"** HIGH RISK:** The model predicts this customer is likely to **CHURN**.")
             st.progress(probability)
             st.write(f"Confidence Level: **{probability:.2%}**")
         else:
-            st.success(f"✅ **LOW RISK:** The model predicts this customer is likely to **STAY**.")
+            st.success(f"** LOW RISK:** The model predicts this customer is likely to **STAY**.")
             st.progress(probability)
             st.write(f"Churn Probability: **{probability:.2%}**")
             
