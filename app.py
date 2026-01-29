@@ -149,7 +149,7 @@ st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Data Analysis", "Prediction"])
 
 if page == "Home":
-    st.title("📊 Customer Churn Analysis")
+    st.title("Customer Churn Analysis")
     
     col1, col2 = st.columns([1.5, 1])
     
@@ -179,10 +179,10 @@ if page == "Home":
     s4.metric("Accuracy", "81.2%")
 
 elif page == "Data Analysis":
-    st.title("🔍 Data Insights Explorer")
+    st.title("Data Insights Explorer")
     st.write("Visualizing the factors that drive customer churn.")
     
-    tab1, tab2 = st.tabs(["📊 Target Distribution", "🔗 Feature Correlations"])
+    tab1, tab2 = st.tabs(["Target Distribution", "Feature Correlations"])
     
     with tab1:
         col_a, col_b = st.columns([1, 2])
@@ -202,7 +202,7 @@ elif page == "Data Analysis":
         """)
 
 elif page == "Prediction":
-    st.title("🔮 Predictive Analytics")
+    st.title("Predictive Analytics")
     
     # Model Selection
     selected_model_type = st.sidebar.selectbox("Select Model Algorithm", ["Logistic", "Linear"])
@@ -221,14 +221,14 @@ elif page == "Prediction":
         col1, col2 = st.columns(2)
         
         with col1:
-            st.subheader("👤 Personal Details")
+            st.subheader("Personal Details")
             age = st.slider("Age", 18, 100, 40)
             gender = st.selectbox("Gender", ["Female", "Male"])
             geography = st.selectbox("Geography", ["France", "Germany", "Spain"])
             is_active = st.selectbox("Is Active Member?", [1, 0], format_func=lambda x: "Yes" if x == 1 else "No")
             
         with col2:
-            st.subheader("💰 Financial Profile")
+            st.subheader("Financial Profile")
             credit_score = st.number_input("Credit Score", 300, 850, 600)
             balance = st.number_input("Account Balance ($)", min_value=0.0, value=0.0, step=1000.0)
             salary = st.number_input("Estimated Salary ($)", min_value=0.0, value=50000.0, step=5000.0)
@@ -237,7 +237,7 @@ elif page == "Prediction":
 
     st.divider()
     
-    if st.button("▶️ Run Prediction Engine"): 
+    if st.button("Run Prediction Engine"): 
         # Prepare input data
         input_data = {
             'CreditScore': credit_score,
@@ -268,7 +268,7 @@ elif page == "Prediction":
             probability = np.clip(raw_pred, 0, 1)
             prediction = [1 if probability >= 0.5 else 0]
         
-        st.subheader("📋 Assessment Result")
+        st.subheader("Assessment Result")
         
         if prediction[0] == 1:
             st.error(f"** HIGH RISK:** The model predicts this customer is likely to **CHURN**.")
